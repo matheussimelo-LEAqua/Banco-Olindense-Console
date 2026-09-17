@@ -7,7 +7,7 @@ public class Cliente {
     private String email;
     private String cpf;
     private String telefone;
-    private int senha;
+    private String senha;
 
     //Construtor sem dados
     /**
@@ -17,7 +17,7 @@ public class Cliente {
     public Cliente() {}
 
     //Construtor com dados
-    public Cliente(String nome, String email, String cpf, String telefone, int senha) {
+    public Cliente(String nome, String email, String cpf, String telefone, String senha) {
         setNome(nome); //Não tem que colocar nada, coloquei por padronização.
         setEmail(email); //O setEmail no construtor garante que meu regex seja validado e imprima erro em caso de sintaxe errada.
         setCpf(cpf); //O setCpf no construtor garante que meu regex seja validado e imprima erro em caso de sintaxe errada.
@@ -42,7 +42,7 @@ public class Cliente {
         return telefone;
     }
 
-    public int getSenha() {
+    public String getSenha() {
         return senha;
     }
 
@@ -83,10 +83,10 @@ public class Cliente {
         }
     }
 
-    public void setSenha(int senha) {
+    public void setSenha(String senha) {
         String padrao = "^\\d{6}$";
         //String.valueof() - Transforma apenas nesse momento a variável int em String pra passar no regex, que só aceita String ou char.
-        if (Pattern.matches(padrao, String.valueOf(senha))) {
+        if (Pattern.matches(padrao, senha)) {
             this.senha = senha;
             /**
              * throw - Interrompe instantaneamente o programa.

@@ -23,10 +23,9 @@ public class ContaCorrente extends Conta {
             ajustarSaldo(-valor); // sinal negativo junto a valor pra mudar a operação de soma que foi definida em conta e realizar a retirada pra saque.
             System.out.println("Saque realizado com sucesso!");
         } else if (valor > this.getSaldo() + limiteChequeEspecial) {
-            System.out.println("Saldo insuficiente para saque.");
+            throw new IllegalArgumentException("Saldo insuficiente para saque.");
         } else {
-            System.out.println("Valor inválido. O saque deve ser maior que 0."); //caso o usuário digite um valor negativo
-        }
+            throw new IllegalArgumentException("Valor inválido. O saque deve ser maior que 0.");        }
     }
     @Override
     public void apresentar() {

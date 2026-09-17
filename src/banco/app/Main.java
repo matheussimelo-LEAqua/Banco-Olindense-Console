@@ -26,7 +26,7 @@ public class Main {
         boolean cpfValido = false;
         boolean senhaValida = false;
         boolean telefoneValido = false;
-        //COLOCAR DESAFIO
+
         System.out.println("\n=== TELA DE CADASTRO ===");
         System.out.print("Digite seu nome completo: ");
         user1.setNome(teclado.nextLine());
@@ -51,8 +51,7 @@ public class Main {
         while (!senhaValida) {
             try {
                 System.out.print("Crie uma senha de 6 dígitos numéricos: ");
-                user1.setSenha(teclado.nextInt());
-                teclado.nextLine(); //Para remoção de buffer do int.
+                user1.setSenha(teclado.nextLine());
                 senhaValida = true; //Só chega aqui se o setter não explodir!
             } catch (IllegalArgumentException erro) {
                 System.out.println(erro.getMessage());
@@ -68,9 +67,10 @@ public class Main {
             }
         }
 //---------------------------------------------------------------------------------------------------------
-        Conta continha1 = new Conta();
         boolean numeroContaValida = false;
         boolean agenciaValida = false;
+
+        Conta continha1 = new Conta() {};
 
         System.out.println("\n=== CRIAR CONTA ===");
         System.out.println("Escolha e digite: " +
@@ -108,6 +108,7 @@ public class Main {
             System.out.println("Conta Poupança criada com sucesso!");
         } else {
             System.out.println("Opção inválida.");
+            return; //Expulsa o usuário, impedindo que uma conta null seja mandada pro array.
         }
         /**
          * contasDoBanco a variável da array[50]. Dentro,
@@ -128,8 +129,7 @@ public class Main {
         System.out.println("Digite seu CPF (apenas números): ");
         String cpfDigitado = teclado.nextLine();
         System.out.println("Digite sua senha de 6 dígitos: ");
-        int senhaDigitada = teclado.nextInt();
-        teclado.nextLine(); //remover buffer do int
+        String senhaDigitada = teclado.nextLine();
 
         //O for é o segurança que faz a varredura e confirma se pode ou não pode entrar.
         for (int i = 0; i < totalContas; i++) {
@@ -142,7 +142,7 @@ public class Main {
              * Vai na conta da vez dentro da array, dá um getTitular e ganha acesso aos getters(dados) do usuário.
              */
             String cpfDaConta = contaDaVez.getTitular().getCpf();
-            int senhaDaConta = contaDaVez.getTitular().getSenha();
+            String senhaDaConta = contaDaVez.getTitular().getSenha();
 
             //Agora fazendo a validação do que foi digitado com o que buscou.
             /**
@@ -151,7 +151,7 @@ public class Main {
              * Sendo assim, a mensagem de sucesso do login aparece e retorna que esse boolean é true.
              * Caso chegue até essa validação e não bata nada, retorna uma mensagem de falso e atribue false ao boolean.
              */
-            if (cpfDaConta.equals(cpfDigitado) && senhaDaConta == senhaDigitada) {
+            if (cpfDaConta.equals(cpfDigitado) && senhaDaConta.equals(senhaDigitada)) {
                 contaLogada = contaDaVez;
                 System.out.println("Login aprovado! Bem-vindo(a), " + contaDaVez.getTitular().getNome());
                 return true;
@@ -178,14 +178,22 @@ public class Main {
                     System.out.println("Seu saldo atual é: R$ " + contaLogada.getSaldo());
                     break;
                 case 2:
-                    System.out.print("Digite um valor para depósito --> ");
-                    double valorDeposito = teclado.nextDouble();
-                    contaLogada.depositar(valorDeposito);
+                    try {
+                        System.out.print("Digite um valor para depósito --> ");
+                        double valorDeposito = teclado.nextDouble();
+                        contaLogada.depositar(valorDeposito);
+                    } catch (IllegalArgumentException erro) {
+                        System.out.println(erro.getMessage());
+                    }
                     break;
                 case 3:
-                    System.out.println("Digite um valor para saque --> ");
-                    double valorSaque = teclado.nextDouble();
-                    contaLogada.sacar(valorSaque);
+                    try {
+                        System.out.print("Digite um valor para saque --> ");
+                        double valorSaque = teclado.nextDouble();
+                        contaLogada.sacar(valorSaque);
+                    } catch (IllegalArgumentException erro) {
+                        System.out.println(erro.getMessage());
+                    }
                     break;
                 case 4:
                     System.out.println("Em construção...");

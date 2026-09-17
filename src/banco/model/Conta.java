@@ -2,7 +2,7 @@ package banco.model;
 
 import java.util.regex.Pattern;
 
-public class Conta {
+public abstract class Conta {
     private Cliente titular; //atributo titular que puxa e reune os atributos que a classe Cliente tem.
     private String numeroConta;
     private String agencia;
@@ -73,7 +73,7 @@ public class Conta {
             this.saldo += valor;
             System.out.println("Deposito realizado com sucesso!");
         } else {
-            System.out.println("Valor inválido. Digite um valor acima de 0.");
+            throw new IllegalArgumentException("Valor inválido. Digite um valor acima de 0.");
         }
 
     }
@@ -83,9 +83,9 @@ public class Conta {
             this.saldo -= valor;
             System.out.println("Saque realizado com sucesso!");
         } else if (valor > this.saldo) {
-            System.out.println("Saldo insuficiente para saque.");
+            throw new IllegalArgumentException("Saldo insuficiente para saque.");
         } else {
-            System.out.println("Valor inválido. O saque deve ser maior que 0."); //caso o usuário digite um valor negativo
+            throw new IllegalArgumentException("Valor inválido. O saque deve ser maior que 0.");
         }
     }
 
