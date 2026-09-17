@@ -170,7 +170,8 @@ public class Main {
                     "\n2--Depositar" +
                     "\n3--Sacar" +
                     "\n4--Extrato" +
-                    "\n5--Ficha de dados do cliente");
+                    "\n5--Ficha de dados do cliente" +
+                    "\n6--Sair");
             menu = teclado.nextInt();
             teclado.nextLine(); //removedor de buffer
             switch (menu) {
